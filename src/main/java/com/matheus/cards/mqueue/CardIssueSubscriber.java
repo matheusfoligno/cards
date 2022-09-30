@@ -12,8 +12,10 @@ import com.matheus.cards.repositories.CardRepository;
 import com.matheus.cards.repositories.CustomerCardRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class CardIssueSubscriber {
 
@@ -30,7 +32,7 @@ public class CardIssueSubscriber {
 			customerCardRepository.save(
 					CustomerCard.builder().card(card).cpf(data.getCpf()).cardLimit(data.getLimitReleased()).build());
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error("Erro ao receber solicitação de emissão de cartão", e);
 		}
 	}
 }
